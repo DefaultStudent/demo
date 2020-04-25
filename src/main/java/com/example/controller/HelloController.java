@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.entity.Users;
 import com.example.service.UsersService;
+import org.apache.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +23,8 @@ import java.util.List;
 @ComponentScan("com.example")
 @MapperScan("com.example.mapper")
 public class HelloController {
+
+    private Logger logger = Logger.getLogger(HelloController.class);
 
     @Autowired
     private UsersService usersService;
@@ -45,6 +48,7 @@ public class HelloController {
     @RequestMapping(value = "/all", method = {RequestMethod.POST, RequestMethod.GET})
     private void getAllUsers(HttpServletRequest request,
                              HttpServletResponse response) throws Exception {
+
         List<Users> listUsers = usersService.getAll();
         String id = request.getParameter("id");
         String pwd = request.getParameter("pwd");
@@ -52,6 +56,7 @@ public class HelloController {
         Users user = usersService.loginPage(id, pwd);
 
         if (user == null) {
+            logger.info("用户不存在");
             response.sendRedirect(request.getContextPath() + "/fail");
         } else {
             response.sendRedirect(request.getContextPath() + "/hello");
