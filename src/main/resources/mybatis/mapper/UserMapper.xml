@@ -7,6 +7,6 @@
     </select>
 
     <select id="loginPage" parameterType="String" resultType="com.example.entity.Users">
-        SELECT * FROM users where usersId = #{0} AND userPwd = #{1}
+        SELECT * FROM users where usersId = #{id} AND userPwd = #{pwd}
     </select>
 </mapper>
