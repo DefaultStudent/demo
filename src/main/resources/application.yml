@@ -7,10 +7,9 @@ spring:
     name: weaponsystem
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/weaponsystem?userUnicode=true&characterEncoding=utf-8&userSSL=false&serverTimezone=GMT%2B8
-    data-username: root
-    data-password: pp970928
+    username: root
+    password: pp970928
     # 使用druid数据源
-    type: com.alibaba.druid.pool.DruidDataSource
     druid:
       filters: stat
       max-active: 20
@@ -25,5 +24,6 @@ spring:
       test-on-return: false
       pool-prepared-statements: true
       max-open-prepared-statements: 20
+    type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
   mapper-locations: classpath*:mybatis/mapper/*.xml

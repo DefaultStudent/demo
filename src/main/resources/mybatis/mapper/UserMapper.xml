@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper>
-    <select id="getAll" resultType="">
+<mapper namespace="com.example.mapper.UsersMapper">
+    <select id="getAll" resultType="com.example.entity.Users">
         SELECT * FROM users
     </select>
 
-    <select id="loginPage" parameterType="String" resultType="">
+    <select id="loginPage" parameterType="String" resultType="com.example.entity.Users">
         SELECT * FROM users where usersId = #{0} AND userPwd = #{1}
     </select>
 </mapper>
