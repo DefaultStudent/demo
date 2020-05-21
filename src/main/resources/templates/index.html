@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js"></script>
+</head>
+<body>
+    <div id="maintest" style="width: 600px;height:400px;"></div>
+
+    <script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('maintest'));
+
+        // 新建数组来接受数据
+        var wname = [];
+        var nums = [];
+
+        //AJAX接收数据主体
+        $.ajax({
+            type:"GET",
+            url:"/hello",
+            dataType:"json",
+            async:false,
+            success:function (result) {
+                for (var i = 0; i < result.length; i++){
+                    wname.push(result[i].weaponKindName);
+                    nums.push(result[i].weaponKindId);
+                }
+
+            },
+            error :function(errorMsg) {
+                alert("获取后台数据失败！");
+            }
+        });
+
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: 'Demo'
+            },
+            legend: {
+                data: ['数量']
+            },
+            xAxis: {
+                data: wname
+            },
+            yAxis: {},
+            series: [{
+                name: '数量',
+                type: 'bar',
+                data: nums
+            }]
+        };
+
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

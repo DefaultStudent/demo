@@ -1,7 +1,9 @@
 package com.example.controller;
 
 import com.example.entity.Users;
+import com.example.entity.WeaponKind;
 import com.example.service.UsersService;
+import com.example.service.WeaponKindService;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,20 +32,25 @@ public class HelloController {
     @Autowired
     private UsersService usersService;
 
+    @Autowired
+    private WeaponKindService weaponKindService;
+
     public static void main(String[] args) {
         SpringApplication.run(HelloController.class, args);
     }
 
     @RequestMapping("/hello")
     @ResponseBody
-    public String index() {
-        return "Hello World";
+    public List<WeaponKind> index() {
+
+        ArrayList<WeaponKind> kindList = weaponKindService.getAll();
+
+        return kindList;
     }
 
     @RequestMapping("/fail")
-    @ResponseBody
     public String fail() {
-        return "Failed";
+        return "index";
     }
 
     @RequestMapping(value = "/all", method = {RequestMethod.POST, RequestMethod.GET})
@@ -59,7 +67,7 @@ public class HelloController {
             logger.info("用户不存在");
             response.sendRedirect(request.getContextPath() + "/fail");
         } else {
-            response.sendRedirect(request.getContextPath() + "/hello");
+            response.sendRedirect(request.getContextPath() + "/fail");
         }
     }
 
