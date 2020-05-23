@@ -10,53 +10,84 @@
     <div id="maintest" style="width: 600px;height:400px;"></div>
 
     <script type="text/javascript">
+        $(function () {
+            // 新建数组来接受数据
+            var wname = [];
+            var nums = [];
 
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('maintest'));
-
-        // 新建数组来接受数据
-        var wname = [];
-        var nums = [];
-
-        //AJAX接收数据主体
-        $.ajax({
-            type:"GET",
-            url:"/hello",
-            dataType:"json",
-            async:false,
-            success:function (result) {
-                for (var i = 0; i < result.length; i++){
-                    wname.push(result[i].weaponKindName);
-                    nums.push(result[i].weaponKindId);
+            //AJAX接收数据主体
+            $.ajax({
+                type:"GET",
+                url:"/hello",
+                dataType:"json",
+                timeout:"1000",
+                async:false,
+                success:function (result) {
+                    for (var i = 0; i < result.length; i++){
+                        wname.push(result[i].weaponKindName);
+                        nums.push(result[i].weaponKindId);
+                    }
+                },
+                error :function(errorMsg) {
+                    alert("获取后台数据失败！");
                 }
+            });
 
-            },
-            error :function(errorMsg) {
-                alert("获取后台数据失败！");
+            setInterval(function () {
+                $.ajax({
+                    type:"GET",
+                    url:"/hello",
+                    dataType:"json",
+                    timeout:"1000",
+                    async:false,
+                    success:function (result) {
+                        wname = [];
+                        nums = [];
+                        for (var i = 0; i < result.length; i++){
+                            wname.push(result[i].weaponKindName);
+                            nums.push(result[i].weaponKindId);
+                        }
+                    },
+                    error :function(errorMsg) {
+                        alert("获取后台数据失败！");
+                    }
+                });
+            }, 2000)
+
+            // 指定图表的配置项和数据
+            function dataOption(names, wnums) {
+                return{
+                    title: {
+                        text: 'Demo'
+                    },
+                    legend: {
+                        data: ['数量']
+                    },
+                    xAxis: {
+                        data: names
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '数量',
+                        type: 'bar',
+                        data: wnums
+                    }]
+                };
             }
-        });
 
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('maintest'));
+            var chartNums = dataOption(wname, nums);
+            myChart.setOption(chartNums);
 
-        // 指定图表的配置项和数据
-        var option = {
-            title: {
-                text: 'Demo'
-            },
-            legend: {
-                data: ['数量']
-            },
-            xAxis: {
-                data: wname
-            },
-            yAxis: {},
-            series: [{
-                name: '数量',
-                type: 'bar',
-                data: nums
-            }]
-        };
-
-        myChart.setOption(option);
+            setInterval(function () {
+                myChart.dispose();
+                $("#maintest").html("");
+                myChart = echarts.init(document.getElementById('maintest'));
+                chartNums = dataOption(wname, nums);
+                myChart.setOption(chartNums);
+            }, 5000);
+        })
     </script>
 </body>
 </html>
