@@ -41,11 +41,20 @@
                     timeout:"1000",
                     async:false,
                     success:function (result) {
+                        var oldNums = nums;
                         wname = [];
                         nums = [];
                         for (var i = 0; i < result.length; i++){
                             wname.push(result[i].weaponKindName);
                             nums.push(result[i].weaponKindId);
+                        }
+
+                        if (oldNums.toString() !== nums.toString()) {
+                            myChart.dispose();
+                            $("#maintest").html("");
+                            myChart = echarts.init(document.getElementById('maintest'));
+                            chartNums = dataOption(wname, nums);
+                            myChart.setOption(chartNums);
                         }
                     },
                     error :function(errorMsg) {
@@ -79,14 +88,6 @@
             var myChart = echarts.init(document.getElementById('maintest'));
             var chartNums = dataOption(wname, nums);
             myChart.setOption(chartNums);
-
-            setInterval(function () {
-                myChart.dispose();
-                $("#maintest").html("");
-                myChart = echarts.init(document.getElementById('maintest'));
-                chartNums = dataOption(wname, nums);
-                myChart.setOption(chartNums);
-            }, 5000);
         })
     </script>
 </body>
