@@ -5,4 +5,8 @@
     <select id="getAll" resultType="com.example.entity.WeaponKind">
         SELECT * FROM weaponkind
     </select>
+
+    <insert id="insertOne" parameterType="com.example.entity.WeaponKind" keyProperty="weaponkindId">
+        insert into weaponkind(weaponkindId, weaponkindName) values (#{weaponKindId}, #{weaponKindName})
+    </insert>
 </mapper>

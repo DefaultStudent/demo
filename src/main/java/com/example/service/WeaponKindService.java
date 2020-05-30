@@ -7,4 +7,6 @@ import java.util.ArrayList;
 public interface WeaponKindService {
 
     ArrayList<WeaponKind> getAll();
+
+    boolean insertWeaponKind(int weaponKindId, String weaponkindName);
 }

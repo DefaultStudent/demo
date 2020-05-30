@@ -8,6 +8,33 @@
 </head>
 <body>
     <div id="maintest" style="width: 600px;height:400px;"></div>
+    <div id="addTest">
+        <form action="/addTest" method="post">
+            <table>
+                <tr>
+                    <td>
+                        增加的类型：
+                    </td>
+                    <td>
+                        <input name="typeName" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        增加的数量：
+                    </td>
+                    <td>
+                        <input name="nums" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="添加">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
     <script type="text/javascript">
         $(function () {

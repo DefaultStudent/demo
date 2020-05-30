@@ -71,6 +71,21 @@ public class HelloController {
         }
     }
 
+    @RequestMapping(value = "/addTest", method = {RequestMethod.POST, RequestMethod.GET})
+    private void insert(HttpServletRequest request,
+                        HttpServletResponse response) throws Exception {
+        String kindName = request.getParameter("typeName");
+        String nums = request.getParameter("nums");
+
+        Boolean add = weaponKindService.insertWeaponKind(Integer.parseInt(nums), kindName);
+
+        if (add) {
+            response.sendRedirect(request.getContextPath() + "/fail");
+        } else {
+            System.out.println("fail");
+        }
+    }
+
     @RequestMapping("/start")
     private ModelAndView start() {
         ModelAndView mav = new ModelAndView();

@@ -12,4 +12,6 @@ import java.util.List;
 public interface WeaponKindMapper {
 
     ArrayList<WeaponKind> getAll();
+
+    boolean insertOne(WeaponKind weaponKind);
 }
