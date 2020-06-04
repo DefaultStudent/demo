@@ -1,6 +1,6 @@
 # 服务器端口和项目名称配置
 server:
-  port:8081
+  port: 8081
 # 数据库配置
 spring:
   thymeleaf:
